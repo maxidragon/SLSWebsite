@@ -49,35 +49,33 @@ export class ResultsService {
             });
             if (competitor) {
               console.log(competitor);
-              if (result.best !== -1 && result.best !== -2) {
-                const dbResult = await this.prisma.result.findFirst({
-                  where: {
-                    competitionId: comp.id,
-                    competitorId: competitor.id,
+              const dbResult = await this.prisma.result.findFirst({
+                where: {
+                  competitionId: comp.id,
+                  competitorId: competitor.id,
+                  eventId: event.id,
+                },
+              });
+              console.log(dbResult);
+              if (dbResult === null) {
+                await this.prisma.result.create({
+                  data: {
+                    competitor: {
+                      connect: {
+                        id: competitor.id,
+                      },
+                    },
+                    competition: {
+                      connect: {
+                        id: comp.id,
+                      },
+                    },
                     eventId: event.id,
+                    pos: result.ranking,
+                    best: result.best,
+                    average: result.average,
                   },
                 });
-                console.log(dbResult);
-                if (dbResult === null) {
-                  await this.prisma.result.create({
-                    data: {
-                      competitor: {
-                        connect: {
-                          id: competitor.id,
-                        },
-                      },
-                      competition: {
-                        connect: {
-                          id: comp.id,
-                        },
-                      },
-                      eventId: event.id,
-                      pos: result.ranking,
-                      best: result.best,
-                      average: result.average,
-                    },
-                  });
-                }
               }
             }
           });

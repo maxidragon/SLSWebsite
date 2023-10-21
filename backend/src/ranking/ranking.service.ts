@@ -18,21 +18,21 @@ export class RankingService {
     });
     const ranking = [];
     const includedResults = results.filter(
-      (result) => result.best !== -1 && result.best !== -2,
+      (result) => result.best !== -1 && result.best !== -2 && result.pos <= 20,
     );
-    includedResults.forEach((result) => {
-      if (ranking.some((r) => r.competitor.id === result.competitor.id)) {
-        const index = ranking.findIndex(
-          (r) => r.competitor.id === result.competitor.id,
-        );
-        ranking[index].score += SCORE_FOR_POSITION[result.best];
+    for (const result of includedResults) {
+      const competitor = ranking.find(
+        (r) => r.competitor.id === result.competitor.id,
+      );
+      if (competitor) {
+        competitor.score += SCORE_FOR_POSITION[result.pos];
       } else {
         ranking.push({
           competitor: result.competitor,
-          score: SCORE_FOR_POSITION[result.best],
+          score: SCORE_FOR_POSITION[result.pos],
         });
       }
-    });
+    }
     ranking.sort((a, b) => b.score - a.score);
     return ranking;
   }
