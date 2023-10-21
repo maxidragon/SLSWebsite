@@ -21,7 +21,7 @@ model Competition {
 
 model Competitor {
   id     Int      @id @default(autoincrement())
-  wcaId  String   @unique
+  wcaId  String?   
   name   String?
   Result Result[]
 }
@@ -36,4 +36,6 @@ model Result {
   pos           Int
   best          Int
   average       Int
+
+  @@unique ([competitionId, competitorId, eventId])
 }
