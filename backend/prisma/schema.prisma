@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Competition {
+  id         Int      @id @default(autoincrement())
+  wcaId      String   @unique
+  name       String?
+  wcaWebsite String?
+  isPublic   Boolean  @default(false)
+  Result     Result[]
+}
+
+model Competitor {
+  id     Int      @id @default(autoincrement())
+  wcaId  String   @unique
+  name   String?
+  Result Result[]
+}
+
+model Result {
+  id            Int         @id @default(autoincrement())
+  competitionId Int
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  competitorId  Int
+  competitor    Competitor  @relation(fields: [competitorId], references: [id])
+  eventId       String
+  pos           Int
+  best          Int
+  average       Int
+}
