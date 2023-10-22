@@ -11,17 +11,22 @@ datasource db {
 }
 
 model Competition {
-  id         Int      @id @default(autoincrement())
-  wcaId      String   @unique
-  name       String?
-  wcaWebsite String?
-  isPublic   Boolean  @default(false)
-  Result     Result[]
+  id               Int                @id @default(autoincrement())
+  wcaId            String             @unique
+  name             String?
+  wcaWebsite       String?
+  startDate        DateTime?
+  endDate          DateTime?
+  registrationOpen DateTime?
+  registrationClose DateTime?
+  isPublic         Boolean            @default(false)
+  Result           Result[]
+  CompetitionEvent CompetitionEvent[]
 }
 
 model Competitor {
   id     Int      @id @default(autoincrement())
-  wcaId  String?   
+  wcaId  String?
   name   String?
   Result Result[]
 }
@@ -37,5 +42,14 @@ model Result {
   best          Int
   average       Int
 
-  @@unique ([competitionId, competitorId, eventId])
+  @@unique([competitionId, competitorId, eventId])
+}
+
+model CompetitionEvent {
+  id            Int         @id @default(autoincrement())
+  competitionId Int
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  eventId       String
+
+  @@unique([competitionId, eventId])
 }
