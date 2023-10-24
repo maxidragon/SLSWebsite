@@ -10,3 +10,13 @@ export interface Competition {
     registrationOpen: Date;
     registrationClose: Date;
 }
+
+export interface Person {
+    competitor: Competitor;
+    score: number;
+}
+export interface Competitor {
+    id: number;
+    wcaId: string;
+    name: string;
+}

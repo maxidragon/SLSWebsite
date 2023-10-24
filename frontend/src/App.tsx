@@ -4,11 +4,16 @@ import Layout from "./Layout/Layout";
 import Main from "./Pages/Main/Main";
 import About from "./Pages/About/About";
 import ErrorElement from "./Pages/ErrorElement/ErrorElement";
+import Ranking from "./Pages/Ranking/Ranking";
 
 const router = createHashRouter([
   {
     path: "/about",
     element: <Layout children={<About />} />,
+  },
+  {
+    path: "/ranking",
+    element: <Layout children={<Ranking />} />,
   },
   {
     path: "/",
