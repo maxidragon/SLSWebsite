@@ -57,7 +57,7 @@ export class ResultsService {
         });
         console.log(event.rounds.map((round) => round.id));
         for (const round of event.rounds) {
-          round.results.forEach(async (result) => {
+          for (const result of round.results) {
             const person = wcif.data.persons.find(
               (person) => person.registrantId === result.personId,
             );
@@ -67,63 +67,40 @@ export class ResultsService {
               },
             });
             if (competitor) {
-              console.log(competitor);
-              await this.prisma.result.upsert({
-                create: {
-                  competitor: {
-                    connect: {
-                      id: competitor.id,
-                    },
-                  },
-                  competition: {
-                    connect: {
-                      id: comp.id,
-                    },
-                  },
-                  eventId: event.id,
-                  pos: result.ranking,
-                  best: result.best,
-                  average: result.average,
-                },
-                update: {},
+              const dbResult = await this.prisma.result.findFirst({
                 where: {
-                  competitionId_competitorId_eventId: {
-                    competitionId: comp.id,
-                    competitorId: competitor.id,
-                    eventId: event.id,
-                  },
+                  competitionId: comp.id,
+                  competitorId: competitor.id,
+                  eventId: event.id,
                 },
               });
-              // const dbResult = await this.prisma.result.findFirst({
-              //   where: {
-              //     competitionId: comp.id,
-              //     competitorId: competitor.id,
-              //     eventId: event.id,
-              //   },
-              // });
-              // console.log(dbResult);
-              // if (dbResult === null) {
-              //   await this.prisma.result.create({
-              //     data: {
-              //       competitor: {
-              //         connect: {
-              //           id: competitor.id,
-              //         },
-              //       },
-              //       competition: {
-              //         connect: {
-              //           id: comp.id,
-              //         },
-              //       },
-              //       eventId: event.id,
-              //       pos: result.ranking,
-              //       best: result.best,
-              //       average: result.average,
-              //     },
-              //   });
-              // }
+              console.log(dbResult);
+              if (!dbResult) {
+                try {
+                  await this.prisma.result.create({
+                    data: {
+                      competitor: {
+                        connect: {
+                          id: competitor.id,
+                        },
+                      },
+                      competition: {
+                        connect: {
+                          id: comp.id,
+                        },
+                      },
+                      eventId: event.id,
+                      pos: result.ranking,
+                      best: result.best,
+                      average: result.average,
+                    },
+                  });
+                } catch (err) {
+                  console.log(err);
+                }
+              }
             }
-          });
+          }
         }
       }
     } else {
