@@ -3,6 +3,7 @@ import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import RankingTable from "../../Components/RankingTable";
 import { getRanking } from "../../logic/ranking";
 import { Person } from "../../logic/interfaces";
+import { t } from "i18next";
 
 const Ranking = () => {
   const [persons, setPersons] = useState<Person[]>([]);
@@ -21,6 +22,7 @@ const Ranking = () => {
         console.log(err);
       });
   }, []);
+
   return (
     <>
       <Box
@@ -49,12 +51,28 @@ const Ranking = () => {
               color="text.primary"
               gutterBottom
             >
-                SLS league ranking
+              {t("rankingTitle")}
+            </Typography>
+            <Typography variant="h6" align="center" color="text.secondary">
+              {t('rankingInfo1')}
             </Typography>
             <RankingTable persons={persons} />
           </Container>
         )}
       </Box>
+      <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", mb: 3 }}>
+        <Typography variant="h4" align="center" color="text.primary" gutterBottom>
+          {t('rankingInfo2')}
+        </Typography>
+        <Typography variant="h6" align="center" color="text.secondary" gutterBottom>
+          1. {t('rankingInfo3')}
+        </Typography>
+        <Typography variant="h6" align="center" color="text.secondary" gutterBottom>
+          2. {t('rankingInfo4')} 
+        </Typography>
+        <img src="/score.png" alt="score table" width="600px" height="800px" />
+      </Box>
+
     </>
   );
 };

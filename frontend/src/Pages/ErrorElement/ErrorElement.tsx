@@ -1,5 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import errorImage from "./error.svg";
+import { t } from "i18next";
 
 const ErrorElement = (props: { message: string }) => {
   return (
@@ -8,7 +9,7 @@ const ErrorElement = (props: { message: string }) => {
         <Grid container direction="column" spacing={2} alignItems="center">
           <Grid item>
             <Typography variant="h3" color="red">
-              Error
+              {t('error')}
             </Typography>
           </Grid>
           <Grid item>

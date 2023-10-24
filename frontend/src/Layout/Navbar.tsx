@@ -1,6 +1,5 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import InfoIcon from "@mui/icons-material/Info";
 
 
 const Navbar = (props: { title?: string }) => {
@@ -17,9 +16,15 @@ const Navbar = (props: { title?: string }) => {
                 >
                     {props.title ? props.title : "SLS"}
                 </Typography>
-                <IconButton component={Link} to="/about" rel="noopener noreferrer">
-                    <InfoIcon sx={{ color: "#fff" }} fontSize="large" />
-                </IconButton>
+                <Link to="/ranking" style={{ textDecoration: "none" }}>
+                    <Typography
+                        variant="h6"
+                        color="inherit"
+                        style={{ flexGrow: 1 }}
+                    >
+                        Ranking
+                    </Typography>
+                </Link>
             </Toolbar>
         </AppBar>
     );

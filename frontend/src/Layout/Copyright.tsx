@@ -2,12 +2,13 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Link } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import LanguageSwitcher from "../Components/LanguageSwitcher";
 
 const Copyright = () => {
   return (
-    <div>
+    <Box sx={{display: 'flex', flexDirection: "column", alignItems: "center"}}>
       <Typography variant="body2" color="text.secondary" align="center">
         <Link component={RouterLink} to={"/"} rel="noopener noreferrer">
           SLS
@@ -33,7 +34,8 @@ const Copyright = () => {
           <GitHubIcon sx={{ color: "#000" }} fontSize="large" />
         </IconButton>
       </Typography>
-    </div>
+      <LanguageSwitcher />
+    </Box >
   );
 };
 

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import classes from "./RankingTable.module.css";
 import { Person } from "../logic/interfaces";
+import { t } from "i18next";
 
 const RankingTable = (props: { persons: Person[] }) => {
     const [persons, setPersons] = useState<Person[]>([]);
@@ -24,10 +25,10 @@ const RankingTable = (props: { persons: Person[] }) => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Position</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>WCA ID</TableCell>
-                            <TableCell>Score</TableCell>
+                            <TableCell>{t('position')}</TableCell>
+                            <TableCell>{t('name')}</TableCell>
+                            <TableCell>{t('wcaId')}</TableCell>
+                            <TableCell>{t('score')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

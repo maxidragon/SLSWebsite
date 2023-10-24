@@ -1,18 +1,19 @@
-import { List, ListItemButton, Grid, ListItemText } from "@mui/material";
-import { Link } from "react-router-dom";
+import { List, ListItemButton, Grid, ListItemText, Link } from "@mui/material";
 import { Competition } from "../logic/interfaces";
 import CompetitionEventsList from "./CompetitionEventsList";
+import { t } from "i18next";
 
-const CompetitionList = ({ competitions }: { competitions: Competition[] }) => {
+const CompetitionList = ({ competitions, isPast }: { competitions: Competition[], isPast: boolean; }) => {
     return (
         <List dense={true} disablePadding>
             {competitions.map((competition) => (
                 <ListItemButton
                     key={competition.id}
                     component={Link}
-                    to={
+                    target="_blank"
+                    href={
                         competition.wcaWebsite
-                            ? `/competitions/${competition.id}`
+                            ? competition.wcaWebsite
                             : "/"
                     }
                     sx={{
@@ -33,15 +34,15 @@ const CompetitionList = ({ competitions }: { competitions: Competition[] }) => {
                             }} />
                         </Grid>
                         <Grid item>
-                            Date: {new Date(competition.startDate).toLocaleDateString()}
+                            {t('date')}: {new Date(competition.startDate).toLocaleDateString()}
                         </Grid>
-                        {competition.wcaWebsite && (
+                        {(competition.wcaWebsite && !isPast) && (
                             <>
                                 <Grid item>
-                                    Registration starts: {new Date(competition.registrationOpen).toLocaleDateString()}
+                                    {t('registrationStarts')}: {new Date(competition.registrationOpen).toLocaleDateString()}
                                 </Grid>
                                 <Grid item>
-                                    Registration closes: {new Date(competition.registrationClose).toLocaleDateString()}
+                                    {t('registrationCloses')}:  {new Date(competition.registrationClose).toLocaleDateString()}
                                 </Grid>
                             </>
                         )}
