@@ -1,5 +1,5 @@
 const BACKEND_URL = import.meta.env.PROD
-  ? "https://api.sls.maksymiliangala.com"
+  ? "https://api.sls.maksymiliangala.com/"
   : "http://localhost:5000/";
 
 const WCA_ORIGIN = "https://www.worldcubeassociation.org";
